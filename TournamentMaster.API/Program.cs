@@ -1,4 +1,3 @@
-
 namespace TournamentMaster.API
 {
     public class Program
@@ -13,6 +12,11 @@ namespace TournamentMaster.API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            // Configure AWS logging
+            builder.Logging.ClearProviders(); // Clear default providers
+            builder.Logging.AddConsole();
+            builder.Logging.AddAWSProvider(builder.Configuration.GetAWSLoggingConfigSection());
 
             var app = builder.Build();
 
