@@ -10,4 +10,9 @@
     <Folder Include="Database\Repositories\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TournamentMaster.Application\TournamentMaster.Application.csproj" />
+    <ProjectReference Include="..\TournamentMaster.Domain\TournamentMaster.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
