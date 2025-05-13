@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using TournamentMaster.Infrastructure.Database;
+
 namespace TournamentMaster.API
 {
     public class Program
@@ -12,6 +15,11 @@ namespace TournamentMaster.API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddDbContext<TournamentDbContext>(options =>
+            {
+                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             // Configure AWS logging
             builder.Logging.ClearProviders(); // Clear default providers
