@@ -1,30 +1,35 @@
-using Microsoft.EntityFrameworkCore;
-using TournamentMaster.Infrastructure.Database;
+using Amazon.SecretsManager;
+using TournamentMaster.API.Extensions;
+using TournamentMaster.Application.DependencyInjection;
+using TournamentMaster.Application.Interfaces.AWS;
+using TournamentMaster.Infrastructure.AWS;
+using TournamentMaster.Infrastructure.DependencyInjection;
 
 namespace TournamentMaster.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
+            
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddDbContext<TournamentDbContext>(options =>
-            {
-                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-            });
+            builder.Services.AddAWSService<IAmazonSecretsManager>();
+            builder.Services.AddSingleton<ISecretProvider, AwsSecretProvider>();
 
-            // Configure AWS logging
-            builder.Logging.ClearProviders(); // Clear default providers
-            builder.Logging.AddConsole();
-            builder.Logging.AddAWSProvider(builder.Configuration.GetAWSLoggingConfigSection());
+
+            builder.Services.AddSwaggerDocumentation();
+            builder.Services.AddApplication();
+            builder.Services.AddAppLogging(builder.Configuration);
+            await builder.Services.AddInfrastructureAsync(builder.Configuration);
+
 
             var app = builder.Build();
 
