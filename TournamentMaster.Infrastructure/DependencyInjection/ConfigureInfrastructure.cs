@@ -4,9 +4,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 using TournamentMaster.Application.DTOs.AWS;
+using TournamentMaster.Application.Interfaces;
 using TournamentMaster.Application.Interfaces.AWS;
+using TournamentMaster.Domain.Interfaces.Repositories;
 using TournamentMaster.Infrastructure.AWS;
 using TournamentMaster.Infrastructure.Database;
+using TournamentMaster.Infrastructure.Database.Repositories;
+using TournamentMaster.Infrastructure.Services;
 
 namespace TournamentMaster.Infrastructure.DependencyInjection
 {
@@ -27,6 +31,11 @@ namespace TournamentMaster.Infrastructure.DependencyInjection
 
             services.AddDbContext<TournamentDbContext>(options =>
                 options.UseNpgsql(connString));
+
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+
 
             return services;
         }

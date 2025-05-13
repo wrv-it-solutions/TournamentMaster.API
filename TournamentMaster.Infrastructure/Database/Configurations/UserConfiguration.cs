@@ -14,8 +14,8 @@ namespace TournamentMaster.Infrastructure.Database.Configurations
             builder.Property(x => x.Id)
                    .HasColumnName("Id");
 
-            builder.Property(x => x.Name)
-                   .HasColumnName("Name")
+            builder.Property(x => x.FirstName)
+                   .HasColumnName("FirstName")
                    .HasMaxLength(100)
                    .IsRequired();
 

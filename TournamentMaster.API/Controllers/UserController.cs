@@ -23,7 +23,7 @@ namespace TournamentMaster.API.Controllers
             {
                 Email = "teste",
                 MiddleName = "Test",
-                Name = "Test",
+                FirstName = "Test",
                 PasswordHash = "Test"
             };
 
