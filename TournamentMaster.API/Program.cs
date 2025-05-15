@@ -26,7 +26,7 @@ namespace TournamentMaster.API
 
 
             builder.Services.AddSwaggerDocumentation();
-            builder.Services.AddApplication();
+            builder.Services.AddApplication(builder.Configuration);
             builder.Services.AddAppLogging(builder.Configuration);
             await builder.Services.AddInfrastructureAsync(builder.Configuration);
 

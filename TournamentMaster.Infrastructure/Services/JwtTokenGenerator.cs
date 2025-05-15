@@ -1,24 +1,21 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using TournamentMaster.Application.Interfaces;
+using TournamentMaster.Application.Settings;
 using TournamentMaster.Domain.Entities;
 
 namespace TournamentMaster.Infrastructure.Services
 {
     public class JwtTokenGenerator : IJwtTokenGenerator
     {
-        private readonly IConfiguration _config;
+        private readonly JwtSettings _jwtSettings;
 
-        public JwtTokenGenerator(IConfiguration config)
+        public JwtTokenGenerator(JwtSettings jwtSettings)
         {
-            _config = config;
+            _jwtSettings = jwtSettings;
         }
 
         public string GenerateToken(User user)
@@ -30,13 +27,13 @@ namespace TournamentMaster.Infrastructure.Services
                 new Claim(ClaimTypes.Name, user.FirstName),
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddHours(1);
+            var expires = DateTime.Now.AddMinutes(1);
 
             var token = new JwtSecurityToken(
-                issuer: _config["Jwt:Issuer"],
-                audience: _config["Jwt:Audience"],
+                issuer: _jwtSettings.Issuer,
+                audience: _jwtSettings.Audience,
                 claims: claims,
                 expires: expires,
                 signingCredentials: creds

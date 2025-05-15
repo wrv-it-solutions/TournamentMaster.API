@@ -32,7 +32,6 @@ namespace TournamentMaster.Infrastructure.DependencyInjection
             services.AddDbContext<TournamentDbContext>(options =>
                 options.UseNpgsql(connString));
 
-
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
