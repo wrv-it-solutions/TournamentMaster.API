@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TournamentMaster.Domain.Entities;
 using TournamentMaster.Infrastructure.Database;
@@ -17,6 +18,7 @@ namespace TournamentMaster.API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Post()
         {
             var user = new User

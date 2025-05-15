@@ -11,9 +11,7 @@ namespace TournamentMaster.Application.DependencyInjection
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
         {
 
-            // Bind settings
-            var jwtSettigns = configuration.GetSection("Jwt").Get<JwtSettings>();
-            services.AddSingleton(jwtSettigns);
+
 
 
             services.AddScoped<IBasicSignUpUseCase, BasicSignUpUseCase>();

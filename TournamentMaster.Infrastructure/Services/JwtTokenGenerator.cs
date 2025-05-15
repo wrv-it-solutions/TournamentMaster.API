@@ -29,7 +29,7 @@ namespace TournamentMaster.Infrastructure.Services
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddMinutes(1);
+            var expires = DateTime.Now.AddHours(-1);
 
             var token = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,
