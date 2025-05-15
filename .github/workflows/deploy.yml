@@ -30,7 +30,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t tournament-master-api -f TournamentMaster.API/TournamentMaster.API/Dockerfile .
+          docker build -t tournament-master-api -f TournamentMaster.API/Dockerfile .
           docker tag tournament-master-api:latest ${{ secrets.ECR_REPOSITORY_URI }}:latest
 
       - name: Push Docker image to ECR
